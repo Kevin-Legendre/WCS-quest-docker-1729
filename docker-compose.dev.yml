@@ -6,6 +6,8 @@ services:
         command: npm run dev
         volumes: 
             - ./server/src/:/app/src/
+        depends_on:
+            - mongodb
     mongodb:
         image: mongo
         volumes: 
@@ -13,7 +15,8 @@ services:
     client:
         build: ./client
         ports: 
-            - 8080:3000
-        command: npm run start
+            - 8080:8080
         volumes: 
-            - ./client/src/:/app/src/
+            - ./client/src:/app/src
+            - ./client/public:/app/public
+        command: npm run start
